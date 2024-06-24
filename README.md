@@ -30,8 +30,36 @@ Run `python3 exporter.py`
 | `robot_is_online`                            | Is online                         |
 | `robot_is_sleeping`                          | Is sleeping                       |
 | `robot_is_waste_drawer_full`                 | Is waste drawer full              |
-| `robot_status`                               | Robot status                      |
 | `robot_cycle_count`                          | Cycle count                       |
+
+## Labels
+
+All metrics are also decorated with these labels:
+
+| Label Name           | Description                       |
+|----------------------|-----------------------------------|
+| `robot_id`           | Unique identifier for the robot   |
+| `robot_name`         | Name of the robot                 |
+| `robot_model`        | Model of the robot                |
+| `robot_serial_number`| Serial number of the robot        |
+| `robot_status`       | Current status of the robot       |
+
+## Statuses
+
+Here are the possible robot statuses for the `robot_status` label.  These are used by the state transition timeline in the dashboard:
+
+| Status Key         | Status Description |
+|--------------------|--------------------|
+| `BONNET_REMOVED`   | Bonnet Removed     |
+| `CAT_DETECTED`     | Cat Detected       |
+| `CAT_SENSOR_TIMING`| Cat Sensor Timing  |
+| `CLEAN_CYCLE`      | Clean Cycle        |
+| `EMPTY_CYCLE`      | Empty Cycle        |
+| `READY`            | Ready              |
+| `POWER_DOWN`       | Power Down         |
+| `OFF`              | Off                |
+| `POWER_UP`         | Power Up           |
+| `DRAWER_FULL`      | Drawer Full        |
 
 # Grafana Cloud Integration
 
