@@ -68,3 +68,14 @@ A state transition timeline showing litter box statuses over time:
 1. Alertmanager Rules
 2. Heatmap of most popular times the box is used
 3. Cat weight visualization
+
+# Thanks
+
+This project is inspired by Traci Kamp's [litter-exporter](https://github.com/tlkamp/litter-exporter) project which supports the Litter Robot 3 and is written in Go.
+
+The API interface is powered by the [pylitterbot](https://github.com/natekspencer/pylitterbot) project by 
+Nathan Spencer.
+
+# License
+
+The MIT License
