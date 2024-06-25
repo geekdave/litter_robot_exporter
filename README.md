@@ -3,6 +3,21 @@ Prometheus Exporter for the Whisker Litter Robot 4 Cat Box
 
 <img width="1429" alt="Grafana dashboard showing litter box waste levels and litter levels over time" src="https://github.com/geekdave/litter_robot_exporter/assets/1438478/b02ec43c-dbf1-40d2-bd52-ceda99578bb4">
 
+# Why?
+
+The stock Litter Robot app already provides: 
+
+1. The *current* percentages of clean litter and waste drawer fullness
+1. Alerts for when the drawer is almost full, and full, as well as when the clean litter level is low
+
+What's missing is:
+
+1. The ability to track clean litter and waste drawer levels over time, to understand trends.  It's also helpful to know this information if you'll be having a cat-sitter take over duties and need to let them know how often they should expect to refill clean litter and empty the waste drawer.
+1. Predictive alerts such as "waste drawer expected to fill in 24 hours" in case you'll be away for a day, and need a nudge to proactively empty the tray
+3. A super geeky dashboard 
+
+I created this exporter to fill in the missing gaps, and also to have fun and learn more about some of Grafana's new features such as the state transition timeline, and the [Alloy](https://grafana.com/docs/alloy/latest/) data collector.
+
 # Setup
 
 ## Requirements
