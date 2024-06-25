@@ -1,5 +1,5 @@
 # litter_robot_exporter
-Prometheus Exporter for the Whisker Litter Robot 4 Cat Box
+[Prometheus](https://prometheus.io/) Exporter for the [Whisker Litter Robot 4](https://www.litter-robot.com/) Smart Cat Litter Box
 
 <img width="1429" alt="Grafana dashboard showing litter box waste levels and litter levels over time" src="https://github.com/geekdave/litter_robot_exporter/assets/1438478/b02ec43c-dbf1-40d2-bd52-ceda99578bb4">
 
@@ -17,6 +17,16 @@ What's missing is:
 3. A super geeky dashboard 
 
 I created this exporter to fill in the missing gaps, and also to have fun and learn more about some of Grafana's new features such as the state transition timeline, and the [Alloy](https://grafana.com/docs/alloy/latest/) data collector.
+
+# Support 
+
+## Models
+
+Currently only the Litter Robot 4 is supported because that's the only model that I have access to.  The Litter Robot 3 should also be possible, as it is supported by the underlying [pylitterbot](https://github.com/natekspencer/pylitterbot) library.  If you have a Litter Robot 3 and and interested in contributing, PRs are most welcome!
+
+## Disclaimer
+
+This exporter is not endorsed or supported by Whisker, and may cease to work at any time. Use at your own risk.  It is intended for entertainment and informational purposes only and is not intended for mission-critical production cat litter boxes.
 
 # Setup
 
