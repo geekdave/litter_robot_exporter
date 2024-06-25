@@ -37,7 +37,6 @@ class AppMetrics:
         self.is_online = Gauge("robot_is_online", "Is online", labels)
         self.is_sleeping = Gauge("robot_is_sleeping", "Is sleeping", labels)
         self.is_waste_drawer_full = Gauge("robot_is_waste_drawer_full", "Is waste drawer full", labels)
-        self.status = Gauge("robot_status", "Robot status", labels)
         self.cycle_count = Gauge("robot_cycle_count", "Cycle count", labels)
 
 

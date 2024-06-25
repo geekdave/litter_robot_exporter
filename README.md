@@ -1,7 +1,7 @@
 # litter_robot_exporter
 Prometheus Exporter for the Whisker Litter Robot 4 Cat Box
 
-<img width="1429" alt="Grafana dashboard showing litter box waste levels and litter levels over time" src="https://github.com/geekdave/litter_robot_exporter/assets/1438478/e1f6ae51-3046-4556-b060-79c142e52c75">
+<img width="1429" alt="Grafana dashboard showing litter box waste levels and litter levels over time" src="https://github.com/geekdave/litter_robot_exporter/assets/1438478/b02ec43c-dbf1-40d2-bd52-ceda99578bb4">
 
 # Setup
 
