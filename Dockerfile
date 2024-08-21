@@ -30,4 +30,4 @@ RUN apk add --no-cache libffi
 EXPOSE 80
 
 # Run exporter.py when the container launches
-CMD ["python", "exporter.py"]
+CMD ["python3", "exporter.py"]
