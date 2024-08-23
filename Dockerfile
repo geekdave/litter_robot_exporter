@@ -1,7 +1,7 @@
 FROM python:3.9 
 # Or any preferred Python version.
 ADD exporter.py .
-ADD requirements.txt
+ADD requirements.txt .
 #RUN pip install requests beautifulsoup4 python-dotenv
 RUN pip install --no-cache-dir -r requirements.txt
 # Make port 80 available to the world outside this container
