@@ -1,4 +1,4 @@
-FROM balenalib/raspberry-pi-alpine-python
+FROM python:3.9.19-bookworm
 # Or any preferred Python version.
 ADD exporter.py .
 ADD requirements.txt .
