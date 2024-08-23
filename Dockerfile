@@ -1,4 +1,4 @@
-FROM python:3.9 
+FROM balenalib/raspberry-pi-alpine-python
 # Or any preferred Python version.
 ADD exporter.py .
 ADD requirements.txt .
