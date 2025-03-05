@@ -3,6 +3,7 @@ import time
 from prometheus_client import start_http_server, Gauge, Enum
 import requests
 import asyncio
+import sys
 
 from pylitterbot import Account
 from pylitterbot.robot import EVENT_UPDATE
@@ -70,9 +71,8 @@ class AppMetrics:
             # exit if above env variables are not set
             if not username or not password:
                 print("ROBOT_API_USERNAME and ROBOT_API_PASSWORD environment variables must be set")
-                return
+                sys.exit(1)
 
-            
             # print the current time
             print(f"Litter Robot Exporter - Current time: {time.strftime('%Y-%m-%d %H:%M:%S')}")
             
