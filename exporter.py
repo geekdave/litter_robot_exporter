@@ -72,7 +72,18 @@ class AppMetrics:
                 print("ROBOT_API_USERNAME and ROBOT_API_PASSWORD environment variables must be set")
                 return
 
+            
+            # print the current time
+            print(f"Litter Robot Exporter - Current time: {time.strftime('%Y-%m-%d %H:%M:%S')}")
+            
+            # print the ROBOT_API_USERNAME env variable
+            print(f"Connecting to Litter Robot API with username: {username}")
+
             await account.connect(username=username, password=password, load_robots=True, subscribe_for_updates=True)
+
+            print("Successfully connected to Litter Robot API")
+
+            first_loop=True
 
             # Print robots associated with account.
             for robot in account.robots:
@@ -97,7 +108,11 @@ class AppMetrics:
                 self.is_sleeping.labels(*label_values).set(int(robot.is_sleeping))
                 self.is_waste_drawer_full.labels(*label_values).set(int(robot.is_waste_drawer_full))
                 self.cycle_count.labels(*label_values).set(robot.cycle_count)
-                
+
+                if first_loop:
+                    print(f"Found robot: {robot.name}.  Ready to export metrics.")
+                    first_loop=False
+
         finally:
             # Disconnect from the API.
             await account.disconnect()
