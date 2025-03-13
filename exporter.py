@@ -1,5 +1,6 @@
 import os
 import time
+import signal
 from prometheus_client import start_http_server, Gauge, Enum
 import requests
 import asyncio
@@ -29,6 +30,7 @@ class AppMetrics:
     }
 
     def __init__(self, app_port=80, polling_interval_seconds=5):
+        self.first_loop = True;
         self.app_port = app_port
         self.polling_interval_seconds = polling_interval_seconds
         labels = ["robot_id", "robot_name", "robot_model", "robot_serial_number", "robot_status"]
@@ -39,12 +41,12 @@ class AppMetrics:
         self.is_sleeping = Gauge("robot_is_sleeping", "Is sleeping", labels)
         self.is_waste_drawer_full = Gauge("robot_is_waste_drawer_full", "Is waste drawer full", labels)
         self.cycle_count = Gauge("robot_cycle_count", "Cycle count", labels)
-
+        self.running = True
 
     def run_metrics_loop(self):
         """Metrics fetching loop"""
 
-        while True:
+        while self.running:
 
             # Retry if exception occurs
             try:
@@ -52,7 +54,8 @@ class AppMetrics:
             except Exception as e:
                 print(f"Exception occurred: {e}")
                 pass
-            time.sleep(self.polling_interval_seconds)
+            if self.running:
+              time.sleep(self.polling_interval_seconds)
 
     async def fetch(self):
         """
@@ -77,13 +80,13 @@ class AppMetrics:
             print(f"Litter Robot Exporter - Current time: {time.strftime('%Y-%m-%d %H:%M:%S')}")
             
             # print the ROBOT_API_USERNAME env variable
-            print(f"Connecting to Litter Robot API with username: {username}")
+            if self.first_loop:
+                print(f"Connecting to Litter Robot API with username: {username}")
 
             await account.connect(username=username, password=password, load_robots=True, subscribe_for_updates=True)
 
-            print("Successfully connected to Litter Robot API")
-
-            first_loop=True
+            if self.first_loop:
+                print("Successfully connected to Litter Robot API")
 
             # Print robots associated with account.
             for robot in account.robots:
@@ -109,14 +112,26 @@ class AppMetrics:
                 self.is_waste_drawer_full.labels(*label_values).set(int(robot.is_waste_drawer_full))
                 self.cycle_count.labels(*label_values).set(robot.cycle_count)
 
-                if first_loop:
-                    print(f"Found robot: {robot.name}.  Ready to export metrics.")
-                    first_loop=False
+                if self.first_loop:
+                    print(f"Found robot: {robot.name}.  Cycle count: {robot.cycle_count}.  Ready to export metrics.")
+                    self.first_loop=False
 
         finally:
             # Disconnect from the API.
             await account.disconnect()
 
+    def stop(self):
+      print("Stopping the metrics loop...")
+      self.running = False
+
+def sigterm_handler(_signo, _stack_frame):
+    """Handle SIGTERM and SIGINT signal."""
+    if _signo == signal.SIGTERM:
+        print("SIGTERM received, initiating graceful shutdown.")
+    elif _signo == signal.SIGINT:
+        print("SIGINT received (Ctrl+C), initiating graceful shutdown.")
+    app_metrics.stop()
+    sys.exit(0)
 
 def main():
     """Main entry point"""
@@ -125,10 +140,16 @@ def main():
     app_port = int(os.getenv("APP_PORT", "80"))
     exporter_port = int(os.getenv("EXPORTER_PORT", "9877"))
 
+    global app_metrics
     app_metrics = AppMetrics(
         app_port=app_port,
         polling_interval_seconds=polling_interval_seconds
     )
+    
+    # Register SIGTERM and SIGINT handlers
+    signal.signal(signal.SIGTERM, sigterm_handler)
+    signal.signal(signal.SIGINT, sigterm_handler)
+
     start_http_server(exporter_port)
     print("Listening on port " + str(exporter_port))
     app_metrics.run_metrics_loop()
